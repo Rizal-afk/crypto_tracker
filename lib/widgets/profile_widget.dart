@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -31,20 +33,42 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
+    //mengecek nilai imagePath mengandung blob:http
+    final contains = imagePath.contains(RegExp('blob:http'), 0);
 
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Ink.image(
-          image: image,
-          fit: BoxFit.cover,
-          width: 128,
-          height: 128,
-          child: InkWell(onTap: onClicked),
+    if(contains ||
+        imagePath=='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyoZspK0y6MPSyaxL229SGu7C23C8j-Nm0VQ&usqp=CAU')
+    {
+      final image = NetworkImage(imagePath);
+      return ClipOval(
+        child: Material(
+          color: Colors.transparent,
+          child: Ink.image(
+            image: image,
+            fit: BoxFit.cover,
+            width: 128,
+            height: 128,
+            child: InkWell(onTap: onClicked),
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      final image = File(imagePath);
+      return ClipOval(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            child: Image.file(
+              image,
+              fit: BoxFit.cover,
+              width: 128,
+              height: 128,
+            ) ,
+              onTap: onClicked
+          ),
+        ),
+      );
+    }
   }
 
   Widget buildEditIcon(Color color) => buildCircle(

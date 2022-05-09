@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:crypto_tracker_2/helper.dart';
 import 'package:crypto_tracker_2/screens/home_screen.dart';
 import 'package:crypto_tracker_2/widgets/profile_widget.dart';
@@ -101,7 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           isEdit: true,
           onClicked: () {
             _imagePath = "";
-            ImagePickerHelper().getImageFromCamera((value) => _processImage(value));
+            alertButton();
           }
       );
     }else{
@@ -110,10 +112,55 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           isEdit: true,
           onClicked: () {
             _imagePath = "";
-            ImagePickerHelper().getImageFromCamera((value) => _processImage(value));
+            alertButton();
           }
       );
     }
+  }
+  void alertButton() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      ImagePickerHelper().getImageFromGallery((value) => _processImage(value));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height:10),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      ImagePickerHelper().getImageFromCamera((value) => _processImage(value));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   void _valueName(String value){
@@ -132,7 +179,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  void _processImage(String ? value){
+  void _processImage(String? value){
     if(value!=null){
       setState(() {
         _imagePath = value;

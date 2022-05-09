@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height:10),
+            SizedBox(height: 10),
             Text(
               "Login",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextField(
-                obscureText : true,
+                obscureText: true,
                 controller: password_controller,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -64,18 +64,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   logindata.setBool('login', false);
                   logindata.setString('username', username);
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen(
-                          name:"Fazri Ridwan", email:"123190045@student.upnyk.ac.id"
-                      )));
-                }else if (username == 'rizal' && password == 'admin') {
+                      MaterialPageRoute(builder: (context) =>
+                          HomeScreen(
+                              name: "Fazri Ridwan",
+                              email: "123190045@student.upnyk.ac.id"
+                          )));
+                } else if (username == 'rizal' && password == 'admin') {
                   print('Successfull');
                   logindata.setBool('login', false);
                   logindata.setString('username', username);
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen(
-                          name:"Muhammad Khairul Rizal", email:"123190063@student.upnyk.ac.id"
-                      )));
-                }else{
+                      MaterialPageRoute(builder: (context) =>
+                          HomeScreen(
+                              name: "Muhammad Khairul Rizal",
+                              email: "123190063@student.upnyk.ac.id"
+                          )));
+                } else {
                   text = "Login Failed Username atau Password Salah!";
                   SnackBar snackBar = SnackBar(
                     content: Text(text),
@@ -96,20 +100,33 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     check_if_already_login();
   }
+
   void check_if_already_login() async {
     logindata = await SharedPreferences.getInstance();
     newuser = (logindata.getBool('login') ?? true);
     print(newuser);
     if (newuser == false) {
-      Navigator.pushReplacement(
-          context, new MaterialPageRoute(builder: (context) => HomeScreen()));
+      if (logindata.getString('username') == 'fazri') {
+        Navigator.pushReplacement(
+            context, new MaterialPageRoute(builder: (context) =>
+            HomeScreen(
+                name: "Fazri Ridwan", email: "123190045@student.upnyk.ac.id"
+            )));
+      } else if (logindata.getString('username') == 'rizal') {
+        Navigator.pushReplacement(
+            context, new MaterialPageRoute(builder: (context) =>
+            HomeScreen(
+                name: "Muhammad Khairul Rizal",
+                email: "123190063@student.upnyk.ac.id"
+            )));
+      }
     }
-  }
-  @override
-  void dispose() {
+    @override
+    void dispose() {
 // Clean up the controller when the widget is disposed.
-    username_controller.dispose();
-    password_controller.dispose();
-    super.dispose();
+      username_controller.dispose();
+      password_controller.dispose();
+      super.dispose();
+    }
   }
 }
