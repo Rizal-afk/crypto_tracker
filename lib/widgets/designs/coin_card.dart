@@ -23,7 +23,7 @@ class CoinCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Container(
-        height: 100,
+        height: 120,
         decoration: BoxDecoration(
           color: Color(0xFF5ED5A8),
           borderRadius: BorderRadius.circular(20),
@@ -86,40 +86,42 @@ class CoinCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    price.toDouble().toString(),
-                    style: TextStyle(
-                        color: Colors.grey[900],
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    change.toDouble() < 0
-                        ? change.toDouble().toString()
-                        : '+' + change.toDouble().toString(),
-                    style: TextStyle(
-                      color: change.toDouble() < 0 ? Colors.red : Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    changePercentage.toDouble() < 0
-                        ? changePercentage.toDouble().toString() + ' %'
-                        : '+' + changePercentage.toDouble().toString() + ' %',
-                    style: TextStyle(
-                      color: change.toDouble() < 0 ? Colors.red : Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            Expanded(
+              child:Padding(
+                  padding:EdgeInsets.only(right:10, left:5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        price.toDouble().toString(),
+                        style: TextStyle(
+                            color: Colors.grey[900],
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        change.toDouble() < 0
+                            ? change.toDouble().toString()
+                            : '+' + change.toDouble().toString(),
+                        style: TextStyle(
+                          color: change.toDouble() < 0 ? Colors.red : Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        changePercentage.toDouble() < 0
+                            ? changePercentage.toDouble().toString() + '%'
+                            : '+' + changePercentage.toDouble().toString() + '%',
+                        style: TextStyle(
+                          color: change.toDouble() < 0 ? Colors.red : Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )
               ),
             ),
           ],
